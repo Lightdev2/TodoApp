@@ -8,3 +8,4 @@
  - notifications
  - friends system
  - maybe websocket chat
+ - stats system about your work
