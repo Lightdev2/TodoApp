@@ -9,7 +9,7 @@ namespace TodoApp.BusinesLogic.Services
         public IEnumerable GetTodos()
         {
             var list = new List<string>();
-            for (var i = 0; i < 15; i++)
+            for (int i = 0; i < 15; i++)
             {
                 list.Add("Todo" + i.ToString());
             }

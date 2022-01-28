@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f38a9749-1496-445a-bd55-a8953d2d7d08" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../todoappclient/.browserslistrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/.eslintrc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/babel.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/api/api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/arrow-down.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/arrow.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/calendar.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/gear.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/home.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/logout.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/overview.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/search.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/icons/stats.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/components/AvatarComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/components/Buttons/PrimaryButton.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/components/Inputs/TInput.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/components/SearchComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/components/SideBar.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/components/TodoList.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/components/TodoListItem.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/components/TopAppBarView.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/router/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/store/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/views/CalendarPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/views/Home.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/views/LoginPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/views/OverviewPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/views/ProjectsPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/views/RegisterPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/views/SettingsPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todoappclient/src/views/StatsPage.vue" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="24Eczmfp2nNcmAc7K35D87oF8IT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f38a9749-1496-445a-bd55-a8953d2d7d08" name="Changes" comment="" />
+      <created>1643199452039</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1643199452039</updated>
+      <workItem from="1643199454902" duration="3000" />
+    </task>
+    <servers />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
