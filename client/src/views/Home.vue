@@ -99,6 +99,7 @@ const logout = () => {
 <style scoped lang="scss">
 .homepage {
   display: flex;
+  height: 100%;
   &__sidebar {
     width: 100%;
     padding: 10px 20px 50px 20px;
@@ -119,7 +120,7 @@ const logout = () => {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: 90vh;
   }
   &__link {
     display: flex;
