@@ -44,8 +44,7 @@ const arrowClassObj = computed(() => {
 .sidebar {
   max-width: 350px;
   border-right: 1px solid #dedede;
-  height: 100vh;
-  max-height: 100vh;
+  min-height: 100vh;
   position: relative;
   &__button {
     position: absolute;
