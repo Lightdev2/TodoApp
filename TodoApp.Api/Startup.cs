@@ -17,6 +17,7 @@ namespace TodoApp.Api
         {
             services.AddControllers();
             services.AddTransient<ITodoService, TodoService>();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -24,6 +25,12 @@ namespace TodoApp.Api
         {
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.RoutePrefix = string.Empty;
+                });
                 app.UseDeveloperExceptionPage();
             }
 

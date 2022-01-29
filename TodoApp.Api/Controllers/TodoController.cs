@@ -1,22 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoApp.Core.Services;
+using System.Threading.Tasks;
 
 namespace TodoApp.Api.Controllers
 {
     [ApiController]
-    [Route("api/todo")]
+    [Route("api/todos")]
     public class TodoController : ControllerBase
     {
-        private ITodoService _todoService;
+        private readonly ITodoService _todoService;
+        
         public TodoController(ITodoService service)
         {
             _todoService = service;
         }
-        [Route("index")]
-        public IActionResult Index()
+
+        [HttpGet]
+        public async Task<IActionResult> GetTodos()
         {
-            var result = _todoService.GetTodos();
-            return Ok(result);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTodo()
+        {
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteTodo()
+        {
+            return Ok();
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateTodo()
+        {
+            return Ok();
         }
     }
 }
