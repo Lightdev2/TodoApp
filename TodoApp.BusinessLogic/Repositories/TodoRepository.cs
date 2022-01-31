@@ -4,7 +4,7 @@ using TodoApp.Core.Repositories;
 using TodoApp.DAL.Entities;
 using TodoApp.DAL;
 
-namespace TodoApp.BusinesLogic.Repositories
+namespace TodoApp.BusinessLogic.Repositories
 {
     public class TodoRepository : ITodoRepository
     {

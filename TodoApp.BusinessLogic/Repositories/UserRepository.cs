@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using TodoApp.Core.DTOs;
+using TodoApp.DAL.Entities;
 using TodoApp.Core.Repositories;
 using TodoApp.DAL;
 
-namespace TodoApp.BusinesLogic.Repositories
+namespace TodoApp.BusinessLogic.Repositories
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly TodoAppContext _context;
         public UserRepository(TodoAppContext context)
@@ -16,7 +16,9 @@ namespace TodoApp.BusinesLogic.Repositories
 
         public async Task<int> Add(User user)
         {
-            throw new NotImplementedException();
+            var result = await _context.AddAsync(user);
+            _ = _context.SaveChangesAsync();
+            return result.Entity.Id;
         }
 
         public async Task<int> Update(User user)

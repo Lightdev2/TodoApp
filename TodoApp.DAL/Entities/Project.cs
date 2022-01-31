@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TodoApp.DAL.Entities
 {
@@ -6,6 +7,9 @@ namespace TodoApp.DAL.Entities
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime LastModifiedDate { get; set; }
         public List<Todo> AttachedTodos { get; set; }
+        public List<User> ProjectMembers { get; set; }
     }
 }

@@ -4,10 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TodoApp.BusinesLogic;
-using TodoApp.BusinesLogic.Repositories;
-using TodoApp.BusinesLogic.Services;
-using TodoApp.Core;
+using TodoApp.BusinessLogic.Repositories;
+using TodoApp.BusinessLogic.Services;
 using TodoApp.Core.Repositories;
 using TodoApp.Core.Services;
 using TodoApp.DAL;
@@ -33,6 +31,10 @@ namespace TodoApp.Api
             });
             services.AddTransient<ITodoService, TodoService>();
             services.AddTransient<ITodoRepository, TodoRepository>();
+            services.AddTransient<IProjectsRepository, ProjectsRepository>();
+            services.AddTransient<IProjectsService, ProjectsService>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
             services.AddSwaggerGen();
         }
 

@@ -5,7 +5,7 @@ using TodoApp.Core;
 using TodoApp.Core.Repositories;
 using TodoApp.DAL.Entities;
 
-namespace TodoApp.BusinesLogic.Services
+namespace TodoApp.BusinessLogic.Services
 {
     public class TodoService : ITodoService
     {

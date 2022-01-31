@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Api", "TodoApp.Api\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Core", "TodoApp.Core\TodoApp.Core.csproj", "{B49F06BA-482A-48B6-82E6-1332D9D9881A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.BusinesLogic", "TodoApp.BusinesLogic\TodoApp.BusinesLogic.csproj", "{254CB09B-571E-43A5-8232-FC2F42BA539B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.BusinessLogic", "TodoApp.BusinessLogic\TodoApp.BusinessLogic.csproj", "{254CB09B-571E-43A5-8232-FC2F42BA539B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.DAL", "TodoApp.DAL\TodoApp.DAL.csproj", "{723C5D96-CF92-407E-9B15-8CD4DB14DE8E}"
 EndProject

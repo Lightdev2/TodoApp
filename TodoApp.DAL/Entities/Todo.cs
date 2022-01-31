@@ -10,8 +10,8 @@ namespace TodoApp.DAL.Entities
         public string Title { get; set; }
         public string Desc { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime LastModifiedDate { get; set; }
         public DateTime Deadline { get; set; }
-
         public bool IsFinished { get; set; }
     }
 }
