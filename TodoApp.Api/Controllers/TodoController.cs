@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoApp.Core.Services;
 using System.Threading.Tasks;
+using TodoApp.Core;
+using TodoApp.DAL.Entities;
 
 namespace TodoApp.Api.Controllers
 {
@@ -9,7 +11,7 @@ namespace TodoApp.Api.Controllers
     public class TodoController : ControllerBase
     {
         private readonly ITodoService _todoService;
-        
+
         public TodoController(ITodoService service)
         {
             _todoService = service;
@@ -22,9 +24,10 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTodo()
+        public async Task<IActionResult> CreateTodo(Todo todo)
         {
-            return Ok();
+            var result = await _todoService.CreateTodo(todo);
+            return Ok(result);
         }
 
         [HttpDelete]

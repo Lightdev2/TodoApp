@@ -1,19 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Threading.Tasks;
 using TodoApp.Core.Services;
+using TodoApp.Core;
+using TodoApp.Core.Repositories;
+using TodoApp.DAL.Entities;
 
 namespace TodoApp.BusinesLogic.Services
 {
     public class TodoService : ITodoService
     {
-        public IEnumerable GetTodos()
+        private readonly ITodoRepository _todoRepository;
+        
+        public TodoService(ITodoRepository todoRepository)
         {
-            var list = new List<string>();
-            for (int i = 0; i < 15; i++)
-            {
-                list.Add("Todo" + i.ToString());
-            }
-            return list;
+            _todoRepository = todoRepository;
+        }
+        
+        public async Task<int?> CreateTodo(Todo todo)
+        {
+            todo.CreatedAt = DateTime.Now;
+            var result = await _todoRepository.Add(todo);
+            
+            return result;
         }
     }
 }
