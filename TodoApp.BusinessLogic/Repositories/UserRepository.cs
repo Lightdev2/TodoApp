@@ -1,5 +1,7 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TodoApp.DAL.Entities;
 using TodoApp.Core.Repositories;
 using TodoApp.DAL;
@@ -19,6 +21,12 @@ namespace TodoApp.BusinessLogic.Repositories
             var result = await _context.AddAsync(user);
             _ = _context.SaveChangesAsync();
             return result.Entity.Id;
+        }
+
+        public async Task<User?> FindByEmail(string email)
+        {
+            var result = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return result;
         }
 
         public async Task<int> Update(User user)

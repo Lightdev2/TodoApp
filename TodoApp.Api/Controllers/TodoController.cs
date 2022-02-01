@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoApp.Core.Services;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using TodoApp.Core;
 using TodoApp.DAL.Entities;
 
@@ -24,6 +25,7 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateTodo(Todo todo)
         {
             var result = await _todoService.CreateTodo(todo);

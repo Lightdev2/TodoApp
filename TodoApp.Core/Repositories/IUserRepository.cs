@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace TodoApp.Core.Repositories
         Task<bool> Delete(User user);
         Task<int> Update(User user);
         Task<User> FindById(int id);
+        Task<User?> FindByEmail(string email);
     }
 }

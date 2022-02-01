@@ -1,14 +1,18 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using TodoApp.BusinessLogic.Repositories;
 using TodoApp.BusinessLogic.Services;
 using TodoApp.Core.Repositories;
 using TodoApp.Core.Services;
 using TodoApp.DAL;
+using TodoApp.Api.Infrastacture;
 
 namespace TodoApp.Api
 {
@@ -35,6 +39,21 @@ namespace TodoApp.Api
             services.AddTransient<IProjectsService, ProjectsService>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = AuthOptions.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = AuthOptions.Audience,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                    ValidateIssuerSigningKey = true,
+                };
+            });
+            services.AddAuthorization();
             services.AddSwaggerGen();
         }
 
@@ -52,9 +71,11 @@ namespace TodoApp.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                endpoints.MapControllers();
