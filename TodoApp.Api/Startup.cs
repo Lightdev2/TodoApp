@@ -79,7 +79,12 @@ namespace TodoApp.Api
 
             app.UseAuthentication();
 
-            app.UseCors(builder => builder.AllowAnyOrigin());
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+            });
             app.UseRouting();
             app.UseAuthorization();
             /*app.Use(async (context, next) =>

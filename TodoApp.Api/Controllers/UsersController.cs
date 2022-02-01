@@ -15,12 +15,5 @@ namespace TodoApp.Api.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
-        [Route("sign-up")]
-        public async Task<int> Register(User user)
-        {
-            var result = await _userService.CreateUser(user);
-            return result;
-        }
     }
 }

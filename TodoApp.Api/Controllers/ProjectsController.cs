@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Core.Services;
 using TodoApp.DAL.Entities;
@@ -17,6 +18,7 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<int> CreateProject(Project project)
         {
             var result = await _projectsService.CreateProject(project);

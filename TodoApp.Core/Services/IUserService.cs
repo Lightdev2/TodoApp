@@ -9,6 +9,6 @@ namespace TodoApp.Core.Services
 {
     public interface IUserService
     {
-        Task<int> CreateUser(User user);
+        Task<bool> CreateUser(User user);
     }
 }

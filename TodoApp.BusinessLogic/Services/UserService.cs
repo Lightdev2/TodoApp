@@ -16,7 +16,7 @@ namespace TodoApp.BusinessLogic.Services
         {
             _userRepository = userRepository;
         }
-        public async Task<int> CreateUser(User user)
+        public async Task<bool> CreateUser(User user)
         {
             var result = await _userRepository.Add(user);
             return result;

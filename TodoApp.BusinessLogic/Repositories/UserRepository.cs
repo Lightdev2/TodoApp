@@ -16,11 +16,15 @@ namespace TodoApp.BusinessLogic.Repositories
             _context = context;
         }
 
-        public async Task<int> Add(User user)
+        public async Task<bool> Add(User user)
         {
-            var result = await _context.AddAsync(user);
-            _ = _context.SaveChangesAsync();
-            return result.Entity.Id;
+            _= await _context.AddAsync(user);
+            var result = await _context.SaveChangesAsync();
+            if (result == 1)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<User?> FindByEmail(string email)
