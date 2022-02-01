@@ -1,18 +1,23 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using TodoApp.BusinessLogic.Repositories;
 using TodoApp.BusinessLogic.Services;
 using TodoApp.Core.Repositories;
 using TodoApp.Core.Services;
 using TodoApp.DAL;
-using TodoApp.Api.Infrastacture;
+using TodoApp.Core.Infrastructure;
 
 namespace TodoApp.Api
 {
@@ -49,6 +54,7 @@ namespace TodoApp.Api
                     ValidateAudience = true,
                     ValidAudience = AuthOptions.Audience,
                     ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
                     IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                     ValidateIssuerSigningKey = true,
                 };
@@ -76,6 +82,36 @@ namespace TodoApp.Api
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseRouting();
             app.UseAuthorization();
+            /*app.Use(async (context, next) =>
+            {
+                #nullable enable
+                var jwt = context.Request.Headers["Authorization"].FirstOrDefault().Split(" ").Last();
+                if (jwt != null)
+                {
+                    var tokenHandler= new JwtSecurityTokenHandler();
+                    try
+                    {
+                        tokenHandler.ValidateToken(jwt, new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ClockSkew = TimeSpan.Zero,
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            ValidateIssuerSigningKey = true,
+                        }, out SecurityToken token);
+                        
+                    }
+                    catch
+                    {
+                        return; 
+                    }
+                    //var user = new JwtSecurityTokenHandler().ValidateToken((JwtSecurityToken)jwt);
+
+                    //await context.Response.WriteAsync(jwt);
+                }
+                await next.Invoke();
+            });*/
             app.UseEndpoints(endpoints =>
             {
                endpoints.MapControllers();

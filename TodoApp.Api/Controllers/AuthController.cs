@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
-using TodoApp.Api.Infrastacture;
+using TodoApp.Core.Infrastructure;
 using TodoApp.Core.DTOs;
 using TodoApp.Core.Services;
 
@@ -33,15 +33,9 @@ namespace TodoApp.Api.Controllers
             var isValidUser = await _authService.VerifyUser(userCredentials);
             if (!isValidUser) return Unauthorized();
             var claims = new List<Claim> { new Claim(ClaimTypes.Email, userCredentials.Email) };
-            var jwt = new JwtSecurityToken(
-                issuer: AuthOptions.Issuer,
-                audience: AuthOptions.Audience,
-                claims: claims,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)
-            );
-            return Ok(new JwtSecurityTokenHandler().WriteToken(jwt));
+            var jwt = _authService.GenerateJwtToken(userCredentials, claims);
 
+            return Ok(jwt);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace TodoApp.Api.Infrastacture
+namespace TodoApp.Core.Infrastructure
 {
     public class AuthOptions
     {
