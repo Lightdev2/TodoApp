@@ -10,7 +10,7 @@ namespace TodoApp.Core.Repositories
 {
     public interface IUserRepository
     {
-        Task<int> Add(User user);
+        Task<bool> Add(User user);
         Task<bool> Delete(User user);
         Task<int> Update(User user);
         Task<User> FindById(int id);
