@@ -43,6 +43,7 @@ namespace TodoApp.Api.Controllers
                 Email = userCredentials.Email,
                 Token = jwt,
             };
+            var token = HttpContext.Items["Token"];
             return Ok(response);
         }
 

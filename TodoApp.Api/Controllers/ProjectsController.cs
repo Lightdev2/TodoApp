@@ -21,6 +21,7 @@ namespace TodoApp.Api.Controllers
         [Authorize]
         public async Task<int> CreateProject(Project project)
         {
+            var user = (User)HttpContext.Items["User"];
             var result = await _projectsService.CreateProject(project);
             return result;
         }
