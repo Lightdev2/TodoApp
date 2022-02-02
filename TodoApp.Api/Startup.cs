@@ -15,6 +15,9 @@ using Microsoft.IdentityModel.Tokens;
 using TodoApp.BusinessLogic.Repositories;
 using TodoApp.BusinessLogic.Services;
 using TodoApp.Core.Repositories;
+using System.Security.Claims;
+using TodoApp.Api.Middleware;
+using TodoApp.Core.DTOs;
 using TodoApp.Core.Services;
 using TodoApp.DAL;
 using TodoApp.Core.Infrastructure;
@@ -87,36 +90,7 @@ namespace TodoApp.Api
             });
             app.UseRouting();
             app.UseAuthorization();
-            /*app.Use(async (context, next) =>
-            {
-                #nullable enable
-                var jwt = context.Request.Headers["Authorization"].FirstOrDefault().Split(" ").Last();
-                if (jwt != null)
-                {
-                    var tokenHandler= new JwtSecurityTokenHandler();
-                    try
-                    {
-                        tokenHandler.ValidateToken(jwt, new TokenValidationParameters
-                        {
-                            ValidateIssuer = true,
-                            ValidateAudience = true,
-                            ValidateLifetime = true,
-                            ClockSkew = TimeSpan.Zero,
-                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                            ValidateIssuerSigningKey = true,
-                        }, out SecurityToken token);
-                        
-                    }
-                    catch
-                    {
-                        return; 
-                    }
-                    //var user = new JwtSecurityTokenHandler().ValidateToken((JwtSecurityToken)jwt);
-
-                    //await context.Response.WriteAsync(jwt);
-                }
-                await next.Invoke();
-            });*/
+            app.UseJwtMiddleware();
             app.UseEndpoints(endpoints =>
             {
                endpoints.MapControllers();
