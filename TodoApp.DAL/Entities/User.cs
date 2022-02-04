@@ -12,7 +12,8 @@ namespace TodoApp.DAL.Entities
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Sex { get; set; }
-        public List<User> Friends { get; set; }
-        public List<Project> Projects { get; set; }
+        public List<User> Friends { get; set; } = new List<User>();
+        public List<Project> Projects { get; set; } = new List<Project>();
+        public List<UserSession> Sessions { get; set; } = new List<UserSession>();
     }
 }

@@ -9,7 +9,7 @@ namespace TodoApp.DAL.Entities
         public string Title { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime LastModifiedDate { get; set; }
-        public List<Todo> AttachedTodos { get; set; }
-        public List<User> ProjectMembers { get; set; }
+        public List<Todo> AttachedTodos { get; set; } = new List<Todo>();
+        public List<User> ProjectMembers { get; set; } = new List<User>();
     }
 }

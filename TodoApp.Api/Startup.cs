@@ -48,6 +48,8 @@ namespace TodoApp.Api
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUserSessionService, UserSessionService>();
+            services.AddTransient<IUserSessionsRepository, UserSessionsRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters

@@ -25,5 +25,12 @@ namespace TodoApp.Api.Controllers
             var result = await _projectsService.CreateProject(project);
             return result;
         }
+
+        [HttpPost]
+        [Route("find")]
+        public async Task<IActionResult> GetListProjects()
+        {
+            return Ok();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TodoApp.DAL;
@@ -9,9 +10,10 @@ using TodoApp.DAL;
 namespace TodoApp.DAL.Migrations
 {
     [DbContext(typeof(TodoAppContext))]
-    partial class TodoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20220202124635_RefreshTokenTable2")]
+    partial class RefreshTokenTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,12 +143,12 @@ namespace TodoApp.DAL.Migrations
                     b.Property<string>("RefreshToken")
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserIdId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserIdId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sessions");
                 });
@@ -182,11 +184,11 @@ namespace TodoApp.DAL.Migrations
 
             modelBuilder.Entity("TodoApp.DAL.Entities.UserSession", b =>
                 {
-                    b.HasOne("TodoApp.DAL.Entities.User", "UserId")
-                        .WithMany("Sessions")
-                        .HasForeignKey("UserIdId");
+                    b.HasOne("TodoApp.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("UserId");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TodoApp.DAL.Entities.Project", b =>
@@ -197,8 +199,6 @@ namespace TodoApp.DAL.Migrations
             modelBuilder.Entity("TodoApp.DAL.Entities.User", b =>
                 {
                     b.Navigation("Friends");
-
-                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

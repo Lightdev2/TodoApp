@@ -14,5 +14,7 @@ namespace TodoApp.DAL
         public DbSet<Project> Projects { get; set; }
         
         public DbSet<User> Users { get; set; }
+
+        public DbSet<UserSession> Sessions { get; set; }
     }
 }
