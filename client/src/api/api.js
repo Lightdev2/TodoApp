@@ -27,6 +27,7 @@ export function signInAsync(user) {
   return fetch(`${url}api/auth/login`, {
     mode: 'cors',
     method: 'Post',
+    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
     },

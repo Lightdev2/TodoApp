@@ -2,8 +2,10 @@
 using TodoApp.Core.Services;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using TodoApp.BusinessLogic.Bus;
 using TodoApp.Core;
 using TodoApp.DAL.Entities;
+using EvtBus = TodoApp.BusinessLogic.Bus.EvtBus;
 
 namespace TodoApp.Api.Controllers
 {
@@ -11,11 +13,13 @@ namespace TodoApp.Api.Controllers
     [Route("api/todos")]
     public class TodoController : ControllerBase
     {
+        private readonly EvtBus _evtBus;
         private readonly ITodoService _todoService;
 
-        public TodoController(ITodoService service)
+        public TodoController(ITodoService service, EvtBus evtBus)
         {
             _todoService = service;
+            _evtBus = evtBus;
         }
 
         [HttpGet]
@@ -29,6 +33,12 @@ namespace TodoApp.Api.Controllers
         public async Task<IActionResult> CreateTodo(Todo todo)
         {
             var result = await _todoService.CreateTodo(todo);
+            var user = (User)HttpContext.Items["User"];
+            _evtBus.NotifyObservers(new Message
+            {
+                email = user.Email,
+                msg = "new data available",
+            });
             return Ok(result);
         }
 

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TodoApp.DAL;
@@ -9,9 +10,10 @@ using TodoApp.DAL;
 namespace TodoApp.DAL.Migrations
 {
     [DbContext(typeof(TodoAppContext))]
-    partial class TodoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20220202124407_RefreshTokenTable")]
+    partial class RefreshTokenTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,32 +127,6 @@ namespace TodoApp.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TodoApp.DAL.Entities.UserSession", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("ExpiresIn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("UserIdId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserIdId");
-
-                    b.ToTable("Sessions");
-                });
-
             modelBuilder.Entity("ProjectUser", b =>
                 {
                     b.HasOne("TodoApp.DAL.Entities.User", null)
@@ -180,15 +156,6 @@ namespace TodoApp.DAL.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("TodoApp.DAL.Entities.UserSession", b =>
-                {
-                    b.HasOne("TodoApp.DAL.Entities.User", "UserId")
-                        .WithMany("Sessions")
-                        .HasForeignKey("UserIdId");
-
-                    b.Navigation("UserId");
-                });
-
             modelBuilder.Entity("TodoApp.DAL.Entities.Project", b =>
                 {
                     b.Navigation("AttachedTodos");
@@ -197,8 +164,6 @@ namespace TodoApp.DAL.Migrations
             modelBuilder.Entity("TodoApp.DAL.Entities.User", b =>
                 {
                     b.Navigation("Friends");
-
-                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }
