@@ -16,10 +16,12 @@ using TodoApp.BusinessLogic.Repositories;
 using TodoApp.BusinessLogic.Services;
 using TodoApp.Core.Repositories;
 using System.Security.Claims;
+using Microsoft.AspNetCore.CookiePolicy;
 using TodoApp.Api.Middleware;
 using TodoApp.Core.DTOs;
 using TodoApp.Core.Services;
 using TodoApp.DAL;
+using TodoApp.BusinessLogic.Bus;
 using TodoApp.Core.Infrastructure;
 
 namespace TodoApp.Api
@@ -47,6 +49,7 @@ namespace TodoApp.Api
             services.AddTransient<IProjectsService, ProjectsService>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
+            services.AddSingleton<EvtBus>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserSessionService, UserSessionService>();
             services.AddTransient<IUserSessionsRepository, UserSessionsRepository>();
@@ -87,9 +90,15 @@ namespace TodoApp.Api
             app.UseCors(builder =>
             {
                 builder.AllowAnyHeader();
+                builder.WithOrigins("htpp://localhost:8080");
                 builder.AllowAnyOrigin();
                 builder.AllowAnyMethod();
             });
+            var options = new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromHours(1),
+            };
+            app.UseWebSockets(options);
             app.UseRouting();
             app.UseAuthorization();
             app.UseJwtMiddleware();

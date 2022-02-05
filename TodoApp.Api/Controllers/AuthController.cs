@@ -54,6 +54,7 @@ namespace TodoApp.Api.Controllers
                 Token = jwt,
                 RefreshToken = result,
             };
+            HttpContext.Response.Cookies.Append("Token", "asd");
             var token = HttpContext.Items["Token"];
             return Ok(response);
         }
