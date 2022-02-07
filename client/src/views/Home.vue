@@ -50,8 +50,10 @@
     </div>
   </SideBar>
   <div class="homepage__page">
-    <top-app-bar-view/>
-    <router-view></router-view>
+    <top-app-bar-view class="top"/>
+    <div class="page">
+      <router-view></router-view>
+    </div>
   </div>
 </div>
 </template>
@@ -65,7 +67,6 @@ import LogoutIcon from '@/assets/icons/logout.vue';
 import CalendarIcon from '@/assets/icons/calendar.vue';
 import HomeIcon from '@/assets/icons/home.vue';
 import TopAppBarView from '@/components/TopAppBarView.vue';
-
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -85,9 +86,9 @@ export default {
 </script>
 
 <script setup>
+
 const store = useStore();
 const router = useRouter();
-
 const logout = () => {
   store.dispatch('signOut');
   router.push({
@@ -99,10 +100,9 @@ const logout = () => {
 <style scoped lang="scss">
 .homepage {
   display: flex;
-  height: 100%;
   &__sidebar {
     width: 100%;
-    padding: 10px 20px 50px 20px;
+    padding: 10px 20px 0px 20px;
   }
   &__subtitle {
     margin-bottom: 10px;
@@ -131,9 +131,15 @@ const logout = () => {
     cursor: pointer;
   }
   &__page {
-    padding: 0 20px;
     width: 100%;
     height: 100%;
   }
+}
+.page {
+  padding: 50px 20px 0 20px;
+}
+.top {
+  border-bottom: 1px solid #dedede;
+  padding: 15px 20px;
 }
 </style>

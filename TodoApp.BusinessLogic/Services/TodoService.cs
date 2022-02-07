@@ -17,9 +17,10 @@ namespace TodoApp.BusinessLogic.Services
         {
             _todoRepository = todoRepository;
         }
-        public async Task<int?> CreateTodo(Todo todo)
+        public async Task<int?> CreateTodo(Todo todo, User user)
         {
             todo.CreatedAt = DateTime.Now;
+            todo.Creator = user;
             var result = await _todoRepository.Add(todo);
             return result;
         }

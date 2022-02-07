@@ -32,8 +32,8 @@ namespace TodoApp.Api.Controllers
         [Authorize]
         public async Task<IActionResult> CreateTodo(Todo todo)
         {
-            var result = await _todoService.CreateTodo(todo);
             var user = (User)HttpContext.Items["User"];
+            var result = await _todoService.CreateTodo(todo, user);
             _evtBus.NotifyObservers(new Message
             {
                 email = user.Email,

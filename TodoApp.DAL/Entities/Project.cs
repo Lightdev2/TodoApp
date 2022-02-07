@@ -18,6 +18,8 @@ namespace TodoApp.DAL.Entities
         public List<User> ProjectMembers { get; set; } = new List<User>();
         [JsonIgnore]
         public User Creator { get; set; }
+
+        public string Desc { get; set; }
         public int CreatorId { get; set; }
     }
 

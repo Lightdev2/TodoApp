@@ -93,7 +93,7 @@ namespace TodoApp.Api.Controllers
                 return;
             }
 
-            var buffer = Encoding.ASCII.GetBytes(msg.email + msg.msg);
+            var buffer = Encoding.ASCII.GetBytes(msg.msg + msg.email);
             await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, buffer.Length), WebSocketMessageType.Text, true, CancellationToken.None);
         }
     }

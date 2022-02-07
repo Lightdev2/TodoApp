@@ -38,6 +38,19 @@ export function signInAsync(user) {
     );
 }
 
+export function getProjects(token) {
+  return fetch(`${url}api/projects/all`, {
+    mode: 'cors',
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(
+      (res) => res.json(),
+    );
+}
+
 export default {
   signUpAsync,
   getTodos,

@@ -5,6 +5,6 @@ namespace TodoApp.Core.Services
 {
     public interface ITodoService
     {
-        Task<int?> CreateTodo(Todo newTodo);
+        Task<int?> CreateTodo(Todo newTodo, User user);
     }
 }
