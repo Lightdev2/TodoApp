@@ -19,21 +19,6 @@ namespace TodoApp.DAL.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("ProjectUser", b =>
-                {
-                    b.Property<int>("ProjectMembersId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProjectsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ProjectMembersId", "ProjectsId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.ToTable("ProjectUser");
-                });
-
             modelBuilder.Entity("TodoApp.DAL.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -44,6 +29,9 @@ namespace TodoApp.DAL.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -51,6 +39,10 @@ namespace TodoApp.DAL.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Projects");
                 });
@@ -65,6 +57,9 @@ namespace TodoApp.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Deadline")
                         .HasColumnType("timestamp without time zone");
 
@@ -77,13 +72,17 @@ namespace TodoApp.DAL.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("ProjectId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("Id");
 
                     b.HasIndex("ProjectId");
 
@@ -101,6 +100,7 @@ namespace TodoApp.DAL.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
@@ -110,7 +110,11 @@ namespace TodoApp.DAL.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Sex")
                         .HasColumnType("boolean");
@@ -119,6 +123,11 @@ namespace TodoApp.DAL.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("UserId");
 
@@ -141,40 +150,52 @@ namespace TodoApp.DAL.Migrations
                     b.Property<string>("RefreshToken")
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserIdId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserIdId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("ProjectUser", b =>
+            modelBuilder.Entity("TodoApp.DAL.Entities.Project", b =>
                 {
-                    b.HasOne("TodoApp.DAL.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectMembersId")
+                    b.HasOne("TodoApp.DAL.Entities.User", "Creator")
+                        .WithMany("Projects")
+                        .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TodoApp.DAL.Entities.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("TodoApp.DAL.Entities.Todo", b =>
                 {
-                    b.HasOne("TodoApp.DAL.Entities.Project", null)
+                    b.HasOne("TodoApp.DAL.Entities.User", "Creator")
+                        .WithMany("CreatedTodos")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TodoApp.DAL.Entities.Project", "Project")
                         .WithMany("AttachedTodos")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("TodoApp.DAL.Entities.User", b =>
                 {
+                    b.HasOne("TodoApp.DAL.Entities.Project", null)
+                        .WithMany("ProjectMembers")
+                        .HasForeignKey("ProjectId");
+
                     b.HasOne("TodoApp.DAL.Entities.User", null)
                         .WithMany("Friends")
                         .HasForeignKey("UserId");
@@ -182,21 +203,29 @@ namespace TodoApp.DAL.Migrations
 
             modelBuilder.Entity("TodoApp.DAL.Entities.UserSession", b =>
                 {
-                    b.HasOne("TodoApp.DAL.Entities.User", "UserId")
+                    b.HasOne("TodoApp.DAL.Entities.User", "User")
                         .WithMany("Sessions")
-                        .HasForeignKey("UserIdId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("UserId");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TodoApp.DAL.Entities.Project", b =>
                 {
                     b.Navigation("AttachedTodos");
+
+                    b.Navigation("ProjectMembers");
                 });
 
             modelBuilder.Entity("TodoApp.DAL.Entities.User", b =>
                 {
+                    b.Navigation("CreatedTodos");
+
                     b.Navigation("Friends");
+
+                    b.Navigation("Projects");
 
                     b.Navigation("Sessions");
                 });

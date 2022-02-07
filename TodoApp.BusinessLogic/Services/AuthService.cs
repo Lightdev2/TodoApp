@@ -37,7 +37,7 @@ namespace TodoApp.BusinessLogic.Services
                 issuer: AuthOptions.Issuer,
                 audience: AuthOptions.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(5)),
+                expires: DateTime.UtcNow.Add(TimeSpan.FromHours(10)),
                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }

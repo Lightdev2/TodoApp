@@ -8,6 +8,13 @@ namespace TodoApp.DAL
         public TodoAppContext(DbContextOptions<TodoAppContext> options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new TodoConfiguration());
+        }
         
         public DbSet<Todo> Todos { get; set; }
         
