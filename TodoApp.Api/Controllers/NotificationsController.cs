@@ -42,6 +42,8 @@ namespace TodoApp.Api.Controllers
                 WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                 var str = System.Text.Encoding.ASCII.GetString(new ArraySegment<byte>(buffer, 0, buffer.Length));
                 var token = str.Replace("\0", "");
+                var observer = new Sender();
+                observer.webSocket = webSocket;
                 var tokenHandler = new JwtSecurityTokenHandler();
                 try
                 {
@@ -57,7 +59,7 @@ namespace TodoApp.Api.Controllers
                     }, out SecurityToken newToken);
                     var claims = (JwtSecurityToken)newToken;
                     string email = claims.Claims.First(x => x.Type == ClaimTypes.Email).Value;
-                    var observer = new Sender(webSocket, email);
+                    observer._email = email;
                     _evtBus.RegisterObserver(observer);
                 }
                 catch
@@ -68,6 +70,7 @@ namespace TodoApp.Api.Controllers
                 {
                     result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                 }
+                _evtBus.RemoveObserver(observer);
             }
             else
             {
@@ -78,14 +81,9 @@ namespace TodoApp.Api.Controllers
 
     public class Sender : IObserver
     {
-        public WebSocket webSocket;
-        public string _email;
+        public WebSocket webSocket { get; set; }
+        public string _email { get; set; }
 
-        public Sender(WebSocket ws, string email)
-        {
-            webSocket = ws;
-            _email = email;
-        }
         public async void Update(Message msg)
         {
             if (msg.email !=  _email)
