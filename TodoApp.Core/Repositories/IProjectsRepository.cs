@@ -9,6 +9,8 @@ namespace TodoApp.Core.Repositories
 {
     public interface IProjectsRepository
     {
-        Task<int>Add(Project project);
+        Task<int>AddProjectAsync(Project project);
+        Task<int?>UpdateProjectAsync(Project project);
+        Task<List<Project>> GetUserProjectsAsync(User user);
     }
 }

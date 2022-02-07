@@ -14,5 +14,6 @@ namespace TodoApp.DAL.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime ExpiresIn { get; set; }
         public User User { get; set; }
+        public int UserId { get; set; }
     }
 }

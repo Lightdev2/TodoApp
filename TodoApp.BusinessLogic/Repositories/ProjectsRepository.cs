@@ -1,6 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TodoApp.Core.Repositories;
 using TodoApp.DAL;
 using TodoApp.DAL.Entities;
@@ -15,11 +19,29 @@ namespace TodoApp.BusinessLogic.Repositories
         {
             _context = context;
         }
-        public async Task<int> Add(Project project)
+        public async Task<int> AddProjectAsync(Project project)
         {
             var result = await _context.AddAsync(project);
-            _ = _context.SaveChangesAsync();
+            _ = await _context.SaveChangesAsync();
             return result.Entity.Id;
+        }
+
+        public async Task<int?> UpdateProjectAsync(Project project)
+        {
+            var projectToUpdate = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
+            if (projectToUpdate == null) return null;
+            projectToUpdate.Title = project.Title;
+            projectToUpdate.LastModifiedDate = DateTime.UtcNow;
+            _ = await _context.SaveChangesAsync();
+            return projectToUpdate.Id;
+        }
+
+        public async Task<List<Project>> GetUserProjectsAsync(User user)
+        {
+            var projects = await _context.Projects
+                .Where(x => x.Creator == user)
+                .ToListAsync();
+            return projects;
         }
 
     }

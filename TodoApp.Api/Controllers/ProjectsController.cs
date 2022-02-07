@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Core.Services;
 using TodoApp.DAL.Entities;
@@ -10,7 +11,7 @@ namespace TodoApp.Api.Controllers
     [Route("api/projects")]
     public class ProjectsController : ControllerBase
     {
-        public readonly IProjectsService _projectsService;
+        private readonly IProjectsService _projectsService;
 
         public ProjectsController(IProjectsService projectsService)
         {
@@ -19,18 +20,38 @@ namespace TodoApp.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<int> CreateProject(Project project)
+        public async Task<IActionResult> CreateProject(Project project)
         {
+            if (string.IsNullOrEmpty(project.Title)) return BadRequest();
             var user = (User)HttpContext.Items["User"];
-            var result = await _projectsService.CreateProject(project);
-            return result;
+            var result = await _projectsService.CreateProjectAsync(project, user);
+            return Ok(result.ToString());
         }
 
-        [HttpPost]
-        [Route("find")]
-        public async Task<IActionResult> GetListProjects()
+        [HttpPatch]
+        public async Task<IActionResult> UpdateProject(Project project)
+        {
+            var user = (User)HttpContext.Items["User"];
+            if (string.IsNullOrEmpty(project.Title)) return BadRequest();
+            var result = await _projectsService.UpdateProjectAsync(project);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProject(Project project)
         {
             return Ok();
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("all")]
+        public async Task<IActionResult> GetUserProjects()
+        {
+            var user = (User)HttpContext.Items["User"];
+            var result = await _projectsService.GetUserProjectsAsync(user);
+            return Ok(result);
+        }
+
     }
 }
