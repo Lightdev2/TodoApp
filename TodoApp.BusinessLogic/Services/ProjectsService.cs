@@ -21,7 +21,9 @@ namespace TodoApp.BusinessLogic.Services
             {
                 Title = project.Title,
                 Creator = user,
+                Desc = project.Desc,
                 CreatedDate = DateTime.UtcNow,
+                LastModifiedDate = null,
             };
             var result = await _projectsRepository.AddProjectAsync(projectToSave);
             return result;

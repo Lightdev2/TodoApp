@@ -11,7 +11,7 @@ namespace TodoApp.DAL.Entities
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime LastModifiedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
         [JsonIgnore]
         public List<Todo> AttachedTodos { get; set; } = new List<Todo>();
         [JsonIgnore]
@@ -29,6 +29,8 @@ namespace TodoApp.DAL.Entities
         {
             builder.ToTable("Projects");
             builder.HasIndex(x => x.Id);
+            builder.Property(x => x.LastModifiedDate)
+                .IsRequired(false);
             builder.HasMany(x => x.AttachedTodos)
                 .WithOne(x => x.Project)
                 .HasForeignKey(x => x.ProjectId);

@@ -49,10 +49,15 @@ namespace TodoApp.Api.Controllers
 
         [HttpDelete]
         [Authorize]
-        public async Task<IActionResult> DeleteProject([FromBody]int projectId)
+        public async Task<IActionResult> DeleteProject(projectId id)
         {
             var user = (User)HttpContext.Items["User"];
-            var result = await _projectsService.DeleteProjectAsync(projectId, user);
+            var result = await _projectsService.DeleteProjectAsync(id.id, user);
+            _eventBus.NotifyObservers(new Message
+            {
+                email = user.Email,
+                msg = "new data available"
+            });
             return Ok(result);
         }
 
@@ -66,5 +71,10 @@ namespace TodoApp.Api.Controllers
             return Ok(result);
         }
 
+    }
+
+    public class projectId
+    {
+        public int id { get; set; }
     }
 }

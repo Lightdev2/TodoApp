@@ -51,8 +51,41 @@ export function getProjects(token) {
     );
 }
 
+export function deleteProjectAsync(token, id) {
+  return fetch(`${url}api/projects/`, {
+    mode: 'cors',
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id,
+    }),
+  })
+    .then(
+      (res) => res.json(),
+    );
+}
+
+export function createProjectAsync(token, project) {
+  return fetch(`${url}api/projects/`, {
+    mode: 'cors',
+    method: 'Post',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(project),
+  })
+    .then(
+      (res) => res.json(),
+    );
+}
+
 export default {
   signUpAsync,
   getTodos,
   signInAsync,
+  createProjectAsync,
 };
