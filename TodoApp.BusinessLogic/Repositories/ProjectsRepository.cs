@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Core.Repositories;
@@ -26,14 +26,22 @@ namespace TodoApp.BusinessLogic.Repositories
             return result.Entity.Id;
         }
 
-        public async Task<int?> UpdateProjectAsync(Project project)
+        public async Task<int?> UpdateProjectAsync(Project project, User user)
         {
-            var projectToUpdate = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
+            var projectToUpdate = await _context.Projects
+                .FirstOrDefaultAsync(x => x.Id == project.Id && x.Creator == user);
             if (projectToUpdate == null) return null;
             projectToUpdate.Title = project.Title;
             projectToUpdate.LastModifiedDate = DateTime.UtcNow;
             _ = await _context.SaveChangesAsync();
             return projectToUpdate.Id;
+        }
+
+        public async Task<bool> DeleteProjectAsync(Project project)
+        {
+            var result = _context.Projects.Remove(project);
+            _ = await _context.SaveChangesAsync();
+            return result.State == EntityState.Deleted;
         }
 
         public async Task<List<Project>> GetUserProjectsAsync(User user)
@@ -42,6 +50,12 @@ namespace TodoApp.BusinessLogic.Repositories
                 .Where(x => x.Creator == user)
                 .ToListAsync();
             return projects;
+        }
+
+        public async Task<Project> FindProjectById(int id)
+        {
+            var project = await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
+            return project ?? null;
         }
 
     }

@@ -21,22 +21,27 @@ namespace TodoApp.BusinessLogic.Services
             {
                 Title = project.Title,
                 Creator = user,
+                Desc = project.Desc,
                 CreatedDate = DateTime.UtcNow,
+                LastModifiedDate = null,
             };
             var result = await _projectsRepository.AddProjectAsync(projectToSave);
             return result;
         }
 
-        public async Task<int?> UpdateProjectAsync(Project project)
+        public async Task<bool> DeleteProjectAsync(int projectId, User user)
         {
-            project.LastModifiedDate = DateTime.UtcNow;
-            var result = await _projectsRepository.UpdateProjectAsync(project);
+            var project = await _projectsRepository.FindProjectById(projectId);
+            if (project == null || project.Creator != user) return false;
+            var result = await _projectsRepository.DeleteProjectAsync(project);
             return result;
         }
 
-        public async Task<bool> CanUserUpdateProjectAsync(Project project, User user)
+        public async Task<int?> UpdateProjectAsync(Project project, User user)
         {
-            return false;
+            project.LastModifiedDate = DateTime.UtcNow;
+            var result = await _projectsRepository.UpdateProjectAsync(project, user);
+            return result;
         }
 
         public async Task<List<Project>> GetUserProjectsAsync(User user)

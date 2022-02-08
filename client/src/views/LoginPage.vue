@@ -24,7 +24,7 @@
 <script>
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import TInput from '@/components/Inputs/TInput.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { signInAsync } from '@/api/api';
@@ -45,6 +45,8 @@ const email = ref('');
 const store = useStore();
 const router = useRouter();
 let ws = null;
+const bus = inject('bus');
+console.log(bus);
 const loginAsync = () => {
   store.dispatch('signIn');
   const user = {
@@ -53,12 +55,14 @@ const loginAsync = () => {
   };
   signInAsync(user)
     .then((res) => {
+      localStorage.setItem('Token', res.token);
       ws = new WebSocket('wss://localhost:44336/ws');
       ws.onopen = () => {
         ws.send(res.token);
       };
       ws.onmessage = (msg) => {
         console.log(msg.data);
+        bus.next(msg.data);
       };
     });
   router.push({

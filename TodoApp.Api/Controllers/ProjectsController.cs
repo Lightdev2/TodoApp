@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.BusinessLogic.Bus;
 using TodoApp.Core.Services;
 using TodoApp.DAL.Entities;
 
@@ -12,10 +13,12 @@ namespace TodoApp.Api.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectsService _projectsService;
+        private readonly EvtBus _eventBus;
 
-        public ProjectsController(IProjectsService projectsService)
+        public ProjectsController(IProjectsService projectsService, EvtBus eventBus)
         {
             _projectsService = projectsService;
+            _eventBus = eventBus;
         }
 
         [HttpPost]
@@ -25,22 +28,37 @@ namespace TodoApp.Api.Controllers
             if (string.IsNullOrEmpty(project.Title)) return BadRequest();
             var user = (User)HttpContext.Items["User"];
             var result = await _projectsService.CreateProjectAsync(project, user);
+            _eventBus.NotifyObservers(new Message
+            {
+                email = user.Email,
+                msg = "new data available"
+            });
             return Ok(result.ToString());
         }
 
         [HttpPatch]
+        [Authorize]
         public async Task<IActionResult> UpdateProject(Project project)
         {
             var user = (User)HttpContext.Items["User"];
             if (string.IsNullOrEmpty(project.Title)) return BadRequest();
-            var result = await _projectsService.UpdateProjectAsync(project);
+            var result = await _projectsService.UpdateProjectAsync(project, user);
+            if (result == null) return NotFound();
             return Ok(result);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteProject(Project project)
+        [Authorize]
+        public async Task<IActionResult> DeleteProject(projectId id)
         {
-            return Ok();
+            var user = (User)HttpContext.Items["User"];
+            var result = await _projectsService.DeleteProjectAsync(id.id, user);
+            _eventBus.NotifyObservers(new Message
+            {
+                email = user.Email,
+                msg = "new data available"
+            });
+            return Ok(result);
         }
 
         [HttpPost]
@@ -48,10 +66,15 @@ namespace TodoApp.Api.Controllers
         [Route("all")]
         public async Task<IActionResult> GetUserProjects()
         {
-            var user = (User)HttpContext.Items["User"];
+            var user = (User) HttpContext.Items["User"];
             var result = await _projectsService.GetUserProjectsAsync(user);
             return Ok(result);
         }
 
+    }
+
+    public class projectId
+    {
+        public int id { get; set; }
     }
 }
