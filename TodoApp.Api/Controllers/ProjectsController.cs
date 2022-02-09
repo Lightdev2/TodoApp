@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.BusinessLogic.Bus;
+using TodoApp.Core.DTOs;
 using TodoApp.Core.Services;
 using TodoApp.DAL.Entities;
+using User = TodoApp.DAL.Entities.User;
 
 namespace TodoApp.Api.Controllers
 {
@@ -31,7 +33,7 @@ namespace TodoApp.Api.Controllers
             _eventBus.NotifyObservers(new Message
             {
                 email = user.Email,
-                msg = "new data available"
+                msg = "created project"
             });
             return Ok(result.ToString());
         }
@@ -49,14 +51,14 @@ namespace TodoApp.Api.Controllers
 
         [HttpDelete]
         [Authorize]
-        public async Task<IActionResult> DeleteProject(projectId id)
+        public async Task<IActionResult> DeleteProject(ProjectId id)
         {
             var user = (User)HttpContext.Items["User"];
             var result = await _projectsService.DeleteProjectAsync(id.id, user);
             _eventBus.NotifyObservers(new Message
             {
                 email = user.Email,
-                msg = "new data available"
+                msg = "deleted project"
             });
             return Ok(result);
         }
@@ -71,10 +73,5 @@ namespace TodoApp.Api.Controllers
             return Ok(result);
         }
 
-    }
-
-    public class projectId
-    {
-        public int id { get; set; }
     }
 }

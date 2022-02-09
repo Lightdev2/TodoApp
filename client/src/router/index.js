@@ -7,6 +7,7 @@ import OverviewPage from '@/views/OverviewPage.vue';
 import StatsPage from '@/views/StatsPage.vue';
 import CalendarPage from '@/views/CalendarPage.vue';
 import ProjectsPage from '@/views/ProjectsPage.vue';
+import ProjectPage from '@/views/ProjectPage.vue';
 import store from '@/store';
 
 const routes = [
@@ -50,6 +51,11 @@ const routes = [
         path: '/projects',
         name: 'projects',
         component: ProjectsPage,
+      },
+      {
+        path: '/project/:id',
+        name: 'project',
+        component: ProjectPage,
       },
     ],
   },

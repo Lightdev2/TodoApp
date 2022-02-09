@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TodoApp.BusinessLogic.Bus;
 using TodoApp.Core.Services;
 using TodoApp.Core;
+using TodoApp.Core.DTOs;
 using TodoApp.Core.Repositories;
-using TodoApp.DAL.Entities;
+using Todo = TodoApp.DAL.Entities.Todo;
+using User = TodoApp.DAL.Entities.User;
 
 
 namespace TodoApp.BusinessLogic.Services
@@ -22,6 +25,12 @@ namespace TodoApp.BusinessLogic.Services
             todo.CreatedAt = DateTime.Now;
             todo.Creator = user;
             var result = await _todoRepository.Add(todo);
+            return result;
+        }
+
+        public async Task<List<Todo>> GetAllTodosInProjectAsync(ProjectId projectId)
+        {
+            var result = await _todoRepository.GetAllInProject(projectId);
             return result;
         }
     }

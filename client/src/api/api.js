@@ -83,9 +83,40 @@ export function createProjectAsync(token, project) {
     );
 }
 
+export function createTaskAsync(token, todo) {
+  return fetch(`${url}api/todos/`, {
+    mode: 'cors',
+    method: 'Post',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(todo),
+  })
+    .then(
+      (res) => res.json(),
+    );
+}
+
+export function getTodosInProjectAsync(token, todo) {
+  return fetch(`${url}api/todos/all`, {
+    mode: 'cors',
+    method: 'Post',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(todo),
+  })
+    .then(
+      (res) => res.json(),
+    );
+}
+
 export default {
   signUpAsync,
   getTodos,
   signInAsync,
   createProjectAsync,
+  getTodosInProjectAsync,
 };

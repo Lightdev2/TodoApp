@@ -1,7 +1,14 @@
 <template>
   <div class="card">
     <div class="card__content">
-      <h3 class="card__title">Title : {{ props.project.title }}</h3>
+      <router-link :to="{
+        name: 'project',
+        params: {
+          id: project.id
+        }
+      }">
+        <h3 class="card__title">Title : {{ props.project.title }}</h3>
+      </router-link>
       <h4>Description: </h4>
       <p class="card__desc"> {{ props.project?.desc }}</p>
       <div class="card__date">Created Date: {{ getFriendlyDate(props.project.createdDate) }}</div>
@@ -66,22 +73,28 @@ const getFriendlyDate = (_date) => {
   margin-right: 1rem;
   margin-bottom: 1rem;
   justify-content: space-between;
+
   &__content {
     width: 100%;
   }
+
   &__desc {
     margin: 10px 0;
   }
+
   &__title {
     margin-bottom: 5px;
   }
+
   &__date {
     color: #dedede;
     font-size: 12px;
   }
+
   &__remove {
     max-width: 50%;
   }
+
   &__footer {
     display: flex;
     align-items: center;

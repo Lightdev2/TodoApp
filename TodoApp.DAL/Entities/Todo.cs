@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,8 +15,10 @@ namespace TodoApp.DAL.Entities
         public DateTime LastModifiedDate { get; set; }
         public DateTime Deadline { get; set; }
         public bool IsFinished { get; set; }
+        [JsonIgnore]
         public User Creator { get; set; }
         public int CreatorId { get; set; }
+        [JsonIgnore]
         public Project Project { get; set; }
         public int ProjectId { get; set; }
     }

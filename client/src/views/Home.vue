@@ -136,7 +136,7 @@ const logout = () => {
   }
 }
 .page {
-  padding: 50px 20px 0 20px;
+  padding: 10px  20px 0 20px;
 }
 .top {
   border-bottom: 1px solid #dedede;
