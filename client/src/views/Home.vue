@@ -11,12 +11,12 @@
               <span>Overview</span>
             </router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'stats' }" class="homepage__link">
-              <stats-icon class="homepage__sidebar-icon"/>
-              <span>Stats</span>
-            </router-link>
-          </li>
+<!--          <li>-->
+<!--            <router-link :to="{ name: 'stats' }" class="homepage__link">-->
+<!--              <stats-icon class="homepage__sidebar-icon"/>-->
+<!--              <span>Stats</span>-->
+<!--            </router-link>-->
+<!--          </li>-->
           <li>
             <router-link :to="{ name: 'projects' }" class="homepage__link">
               <projects-icon class="homepage__sidebar-icon"/>
@@ -62,7 +62,7 @@
 import SideBar from '@/components/SideBar.vue';
 import GearIcon from '@/assets/icons/gear.vue';
 import ProjectsIcon from '@/assets/icons/overview.vue';
-import StatsIcon from '@/assets/icons/stats.vue';
+//  import StatsIcon from '@/assets/icons/stats.vue';
 import LogoutIcon from '@/assets/icons/logout.vue';
 import CalendarIcon from '@/assets/icons/calendar.vue';
 import HomeIcon from '@/assets/icons/home.vue';
@@ -77,7 +77,7 @@ export default {
     ProjectsIcon,
     SideBar,
     GearIcon,
-    StatsIcon,
+    //  StatsIcon,
     LogoutIcon,
     CalendarIcon,
     HomeIcon,

@@ -9,5 +9,7 @@ namespace TodoApp.Core.Repositories
     {
         Task<int?> Add(Todo todo);
         Task<List<Todo>> GetAllInProject(ProjectId projectId);
+        Task<bool> UpdateTodo(Todo todo);
+        Task<Todo> FindTodoById(int id);
     }
 }

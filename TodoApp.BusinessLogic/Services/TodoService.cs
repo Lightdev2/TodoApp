@@ -32,6 +32,21 @@ namespace TodoApp.BusinessLogic.Services
         {
             var result = await _todoRepository.GetAllInProject(projectId);
             return result;
+
+        }
+
+        public async Task<bool> UpdateTodoAsync(TodoToUpdate todo)
+        {
+            var newTodo = new Todo
+            {
+                Title = todo.title,
+                Desc = todo.desc,
+                IsFinished = todo.isFinished,
+                ProjectId = todo.projectId,
+                Id = todo.id,
+            };
+            var result = await _todoRepository.UpdateTodo(newTodo);
+            return result;
         }
     }
 }

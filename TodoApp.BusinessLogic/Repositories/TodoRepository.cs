@@ -37,5 +37,21 @@ namespace TodoApp.BusinessLogic.Repositories
 
             return result;
         }
+
+        public async Task<bool> UpdateTodo(Todo todo)
+        {
+            var oldTodo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == todo.Id);
+            oldTodo.Desc = todo.Desc;
+            oldTodo.IsFinished = todo.IsFinished;
+            oldTodo.Title = todo.Title;
+            oldTodo.LastModifiedDate = DateTime.UtcNow;
+            _ = await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<Todo> FindTodoById(int id)
+        {
+            return new Todo();
+        }
     }
 }

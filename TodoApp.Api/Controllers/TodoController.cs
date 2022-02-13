@@ -64,15 +64,18 @@ namespace TodoApp.Api.Controllers
         {
             var msg = new Message();
             msg.email = "stas12102001@gmail.com";
-            msg.msg = "delete proj";
+            msg.msg = "delete todo";
             _evtBus.NotifyObservers(msg);
             return Ok();
         }
 
-        [HttpPatch]
-        public async Task<IActionResult> UpdateTodo()
+        [HttpPost]
+        [Authorize]
+        [Route("edit")]
+        public async Task<IActionResult> UpdateTodo(TodoToUpdate todo)
         {
-            return Ok();
+            var result = await _todoService.UpdateTodoAsync(todo);
+            return Ok(result);
         }
 
     }

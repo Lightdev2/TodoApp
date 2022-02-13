@@ -20,7 +20,7 @@
         <h2 class="project__column-title">Not finished</h2>
         <draggable
           class="project__column-drag"
-          v-model="myArray"
+          v-model="inProgress"
           group="people"
           item-key="id">
           <template #item="{element}">
@@ -62,7 +62,7 @@ import {
   watch,
 } from 'vue';
 import { useRouter } from 'vue-router';
-import { createTaskAsync, getTodosInProjectAsync } from '@/api/api';
+import { createTaskAsync, getTodosInProjectAsync, updateTodoAsync } from '@/api/api';
 
 export default {
   name: 'ProjectPage',
@@ -80,6 +80,7 @@ const router = useRouter();
 const projId = router.currentRoute.value.params.id;
 const myArray = ref([]);
 const finished = ref([]);
+const inProgress = ref([]);
 const showCalendar = ref(false);
 const isShowModal = ref(false);
 const newTodo = ref({
@@ -101,6 +102,7 @@ bus.subscribe(() => {
 });
 const start = ref(0);
 const end = ref(50);
+const stop = ref(false);
 onMounted(() => {
   const token = localStorage.getItem('Token');
   const options = {
@@ -108,14 +110,16 @@ onMounted(() => {
     threshold: 1.0,
   };
   const callback = (entries, observer) => {
-    /* Content excerpted, show below */
-    console.log('observed');
+    if (stop.value) return;
     getTodosInProjectAsync(token, {
       id: projId,
       start: start.value += 50,
       end: end.value += 50,
     })
       .then((res) => {
+        if (res.length < 50) {
+          stop.value = true;
+        }
         myArray.value = res;
       });
   };
@@ -126,7 +130,14 @@ onMounted(() => {
     end: 50,
   })
     .then((res) => {
-      myArray.value = res;
+      // eslint-disable-next-line no-restricted-syntax
+      for (const el of res) {
+        if (el.isFinished === true) {
+          finished.value.push(el);
+        } else {
+          inProgress.value.push(el);
+        }
+      }
     });
   const elem = document.querySelector('.project__todo--mock');
   setTimeout(() => {
@@ -137,8 +148,27 @@ onMounted(() => {
 watch(finished, (_new, _old) => {
   const seta = new Set(_new);
   const setb = new Set(_old);
-  const result = diff(seta, setb);
-  console.log(result);
+  const result = Array.from(diff(seta, setb));
+  if (result.length === 0) return;
+  const token = localStorage.getItem('Token');
+  result[0].isFinished = true;
+  updateTodoAsync(token, result[0])
+    .then((res) => {
+      console.log(res);
+    });
+});
+
+watch(inProgress, (_new, _old) => {
+  const seta = new Set(_new);
+  const setb = new Set(_old);
+  const result = Array.from(diff(seta, setb));
+  const token = localStorage.getItem('Token');
+  if (result.length === 0) return;
+  result[0].isFinished = false;
+  updateTodoAsync(token, result[0])
+    .then((res) => {
+      console.log(res);
+    });
 });
 const createTask = () => {
   const token = localStorage.getItem('Token');

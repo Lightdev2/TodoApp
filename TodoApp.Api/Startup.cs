@@ -90,7 +90,6 @@ namespace TodoApp.Api
             app.UseCors(builder =>
             {
                 builder.AllowAnyHeader();
-                builder.WithOrigins("htpp://localhost:8080");
                 builder.AllowAnyOrigin();
                 builder.AllowAnyMethod();
             });

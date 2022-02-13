@@ -11,5 +11,6 @@ namespace TodoApp.Core.Services
     {
         Task<int?> CreateTodo(Todo newTodo, User user);
         Task<List<Todo>> GetAllTodosInProjectAsync(ProjectId id);
+        Task<bool> UpdateTodoAsync(TodoToUpdate todo);
     }
 }
